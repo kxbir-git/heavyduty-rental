@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as QuoteRouteImport } from './routes/quote'
 import { Route as EquipmentRouteImport } from './routes/equipment'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -16,6 +17,11 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as EquipmentSlugRouteImport } from './routes/equipment.$slug'
 
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const QuoteRoute = QuoteRouteImport.update({
   id: '/quote',
   path: '/quote',
@@ -53,6 +59,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/equipment': typeof EquipmentRouteWithChildren
   '/quote': typeof QuoteRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/equipment/$slug': typeof EquipmentSlugRoute
 }
 export interface FileRoutesByTo {
@@ -61,6 +68,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/equipment': typeof EquipmentRouteWithChildren
   '/quote': typeof QuoteRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/equipment/$slug': typeof EquipmentSlugRoute
 }
 export interface FileRoutesById {
@@ -70,6 +78,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/equipment': typeof EquipmentRouteWithChildren
   '/quote': typeof QuoteRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/equipment/$slug': typeof EquipmentSlugRoute
 }
 export interface FileRouteTypes {
@@ -80,9 +89,17 @@ export interface FileRouteTypes {
     | '/contact'
     | '/equipment'
     | '/quote'
+    | '/sitemap.xml'
     | '/equipment/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/contact' | '/equipment' | '/quote' | '/equipment/$slug'
+  to:
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/equipment'
+    | '/quote'
+    | '/sitemap.xml'
+    | '/equipment/$slug'
   id:
     | '__root__'
     | '/'
@@ -90,6 +107,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/equipment'
     | '/quote'
+    | '/sitemap.xml'
     | '/equipment/$slug'
   fileRoutesById: FileRoutesById
 }
@@ -99,10 +117,18 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   EquipmentRoute: typeof EquipmentRouteWithChildren
   QuoteRoute: typeof QuoteRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/quote': {
       id: '/quote'
       path: '/quote'
@@ -166,7 +192,18 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   EquipmentRoute: EquipmentRouteWithChildren,
   QuoteRoute: QuoteRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
