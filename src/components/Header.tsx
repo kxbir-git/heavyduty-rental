@@ -1,10 +1,12 @@
 import { Link, useLocation } from "@tanstack/react-router";
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ShieldCheck } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const { isAdmin, user } = useAuth();
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -49,7 +51,17 @@ export default function Header() {
           </nav>
 
           {/* CTA */}
-          <div className="hidden md:block">
+          <div className="hidden md:flex items-center gap-3">
+            {isAdmin && (
+              <Link to="/admin" className="px-3 py-2 text-xs font-bold uppercase tracking-widest text-[#FFB800] hover:text-white flex items-center gap-1.5">
+                <ShieldCheck className="h-4 w-4" /> Admin
+              </Link>
+            )}
+            {!user && (
+              <Link to="/auth" className="px-3 py-2 text-xs font-bold uppercase tracking-widest text-white/60 hover:text-white">
+                Sign In
+              </Link>
+            )}
             <Link
               to="/quote"
               className="px-6 py-3 bg-[#FFB800] text-black text-xs font-black uppercase tracking-widest hover:bg-[#FFB800]/90 transition-all"

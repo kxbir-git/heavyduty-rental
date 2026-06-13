@@ -5,6 +5,9 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { ChevronRight, Check, Truck, Shield, Wrench, Clock } from "lucide-react";
 import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
+
 
 export const Route = createFileRoute("/quote")({
   head: () => ({
@@ -39,6 +42,10 @@ function QuotePage() {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [duration, setDuration] = useState(7);
   const [needsOperator, setNeedsOperator] = useState(false);
+  const [customerName, setCustomerName] = useState("");
+  const [customerEmail, setCustomerEmail] = useState("");
+  const [customerPhone, setCustomerPhone] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   const toggleItem = (id: string) => {
     setSelectedItems((prev) =>
@@ -53,6 +60,44 @@ function QuotePage() {
   const subtotal = equipmentTotal + operatorTotal + transportFee;
   const gst = subtotal * 0.18;
   const total = subtotal + gst;
+
+  const submitQuote = async () => {
+    if (!customerName || !customerEmail) {
+      toast.error("Please provide your name and email");
+      return;
+    }
+    setSubmitting(true);
+    try {
+      const start = new Date();
+      const end = new Date();
+      end.setDate(end.getDate() + duration);
+      const { data: eq } = await supabase
+        .from("equipment")
+        .select("id")
+        .eq("slug", selectedItems[0])
+        .maybeSingle();
+
+      const { data: { user } } = await supabase.auth.getUser();
+      const { error } = await supabase.from("bookings").insert({
+        equipment_id: eq?.id ?? null,
+        customer_name: customerName,
+        customer_email: customerEmail,
+        customer_phone: customerPhone || null,
+        start_date: start.toISOString().slice(0, 10),
+        end_date: end.toISOString().slice(0, 10),
+        total_amount: total,
+        notes: `Items: ${selectedEquipment.map(e => e.name).join(", ")}${needsOperator ? " | with operator" : ""}`,
+        user_id: user?.id ?? null,
+      });
+      if (error) throw error;
+      toast.success("Quote request submitted! We'll contact you within 2 hours.");
+      setSelectedItems([]); setCustomerName(""); setCustomerEmail(""); setCustomerPhone("");
+    } catch (err: any) {
+      toast.error(err.message ?? "Submission failed");
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
     <main className="min-h-screen bg-[#0A0A0A] text-white font-sans">
@@ -233,8 +278,11 @@ function QuotePage() {
                   </div>
 
                   <div className="pt-4 space-y-3">
-                    <Button className="w-full py-6 bg-[#FFB800] text-black font-bold uppercase tracking-widest text-sm hover:bg-[#FFB800]/90 hover:scale-[1.02] transition-all">
-                      Submit Quote Request
+                    <Input placeholder="Your name" value={customerName} onChange={(e) => setCustomerName(e.target.value)} maxLength={100} className="bg-white/5 border-white/10" />
+                    <Input placeholder="Email" type="email" value={customerEmail} onChange={(e) => setCustomerEmail(e.target.value)} maxLength={200} className="bg-white/5 border-white/10" />
+                    <Input placeholder="Phone (optional)" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} maxLength={20} className="bg-white/5 border-white/10" />
+                    <Button onClick={submitQuote} disabled={submitting} className="w-full py-6 bg-[#FFB800] text-black font-bold uppercase tracking-widest text-sm hover:bg-[#FFB800]/90 hover:scale-[1.02] transition-all">
+                      {submitting ? "Submitting..." : "Submit Quote Request"}
                     </Button>
                     <p className="text-xs text-white/30 text-center">
                       This is an estimate. Final pricing confirmed within 2 hours.
