@@ -87,6 +87,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:site_name", content: "KK & Sons Equip" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@kksonsequip" },
+      { name: "twitter:title", content: "KK & Sons Equip — Premium Construction Equipment Rental" },
+      { name: "twitter:description", content: "India's trusted construction equipment rental partner. Excavators, cranes, loaders, rollers, generators, forklifts & more. Pan-India delivery. Request a quote today." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/ecd61d02-df5e-46b4-84aa-16aea61d7d8e/id-preview-961e6b90--f0017040-3731-463e-af7c-4be187e7eed4.lovable.app-1781340556225.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/ecd61d02-df5e-46b4-84aa-16aea61d7d8e/id-preview-961e6b90--f0017040-3731-463e-af7c-4be187e7eed4.lovable.app-1781340556225.png" },
     ],
     links: [
       {
