@@ -17,6 +17,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as GuidesCraneRentalPricingRouteImport } from './routes/guides.crane-rental-pricing'
 import { Route as EquipmentSlugRouteImport } from './routes/equipment.$slug'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
@@ -62,6 +63,12 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GuidesCraneRentalPricingRoute =
+  GuidesCraneRentalPricingRouteImport.update({
+    id: '/guides/crane-rental-pricing',
+    path: '/guides/crane-rental-pricing',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const EquipmentSlugRoute = EquipmentSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -100,6 +107,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/equipment/$slug': typeof EquipmentSlugRoute
+  '/guides/crane-rental-pricing': typeof GuidesCraneRentalPricingRoute
   '/admin/bookings': typeof AuthenticatedAdminBookingsRoute
   '/admin/equipment': typeof AuthenticatedAdminEquipmentRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
@@ -113,6 +121,7 @@ export interface FileRoutesByTo {
   '/quote': typeof QuoteRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/equipment/$slug': typeof EquipmentSlugRoute
+  '/guides/crane-rental-pricing': typeof GuidesCraneRentalPricingRoute
   '/admin/bookings': typeof AuthenticatedAdminBookingsRoute
   '/admin/equipment': typeof AuthenticatedAdminEquipmentRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
@@ -129,6 +138,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/equipment/$slug': typeof EquipmentSlugRoute
+  '/guides/crane-rental-pricing': typeof GuidesCraneRentalPricingRoute
   '/_authenticated/admin/bookings': typeof AuthenticatedAdminBookingsRoute
   '/_authenticated/admin/equipment': typeof AuthenticatedAdminEquipmentRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
@@ -145,6 +155,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/admin'
     | '/equipment/$slug'
+    | '/guides/crane-rental-pricing'
     | '/admin/bookings'
     | '/admin/equipment'
     | '/admin/'
@@ -158,6 +169,7 @@ export interface FileRouteTypes {
     | '/quote'
     | '/sitemap.xml'
     | '/equipment/$slug'
+    | '/guides/crane-rental-pricing'
     | '/admin/bookings'
     | '/admin/equipment'
     | '/admin'
@@ -173,6 +185,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/_authenticated/admin'
     | '/equipment/$slug'
+    | '/guides/crane-rental-pricing'
     | '/_authenticated/admin/bookings'
     | '/_authenticated/admin/equipment'
     | '/_authenticated/admin/'
@@ -187,6 +200,7 @@ export interface RootRouteChildren {
   EquipmentRoute: typeof EquipmentRouteWithChildren
   QuoteRoute: typeof QuoteRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  GuidesCraneRentalPricingRoute: typeof GuidesCraneRentalPricingRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -245,6 +259,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guides/crane-rental-pricing': {
+      id: '/guides/crane-rental-pricing'
+      path: '/guides/crane-rental-pricing'
+      fullPath: '/guides/crane-rental-pricing'
+      preLoaderRoute: typeof GuidesCraneRentalPricingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/equipment/$slug': {
@@ -332,6 +353,7 @@ const rootRouteChildren: RootRouteChildren = {
   EquipmentRoute: EquipmentRouteWithChildren,
   QuoteRoute: QuoteRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  GuidesCraneRentalPricingRoute: GuidesCraneRentalPricingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
