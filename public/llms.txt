@@ -1,0 +1,22 @@
+# KK & Sons Equip
+
+> India's trusted construction equipment rental partner. Excavators, cranes, loaders, rollers, generators, and forklifts available with pan-India delivery and certified operator support.
+
+KK & Sons Equip rents heavy construction machinery to contractors and infrastructure projects across India. Pricing is daily, weekly, or monthly; every machine is insured, safety-inspected, and available with a certified operator.
+
+## Pages
+
+- [Home](/): Brand overview, fleet categories, and core service promises.
+- [Fleet](/equipment): Browse all equipment with live availability and rates.
+- [Request a Quote](/quote): Interactive estimator — pick machines, set duration, get a confirmed quote in two hours.
+- [About](/about): Company history, service standards, and operations footprint.
+- [Contact](/contact): Phone, email, WhatsApp, service areas, and inquiry form.
+
+## Guides
+
+- [Crane Rental Pricing in India (2024)](/guides/crane-rental-pricing): Tonnage tiers, duration discounts, operator costs, and city-by-city rate ranges for Mumbai, Pune, and Delhi NCR.
+
+## Featured Equipment
+
+- [CAT 320 GC Excavator](/equipment/exc-001): 20-ton class general-purpose excavator.
+- [Komatsu PC210 LC](/equipment/exc-002): Mid-size excavator for infrastructure work.

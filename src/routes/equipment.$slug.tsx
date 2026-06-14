@@ -9,16 +9,47 @@ export const Route = createFileRoute("/equipment/$slug")({
   head: ({ params }) => {
     const item = equipmentData[params.slug] || equipmentData["exc-001"];
     const name = item?.name || params.slug;
+    const url = `https://apex-rentals.lovable.app/equipment/${params.slug}`;
     return {
       meta: [
         { title: `${name} — KK & Sons Equip` },
         { name: "description", content: `View specifications, pricing, and availability for ${name} rental.` },
         { property: "og:title", content: `${name} — KK & Sons Equip` },
         { property: "og:description", content: `View specifications, pricing, and availability for ${name} rental.` },
-        { property: "og:url", content: `https://apex-rentals.lovable.app/equipment/${params.slug}` },
+        { property: "og:url", content: url },
+        { property: "og:type", content: "product" },
+        { property: "og:image", content: item?.images?.[0] ?? "" },
       ],
       links: [
-        { rel: "canonical", href: `https://apex-rentals.lovable.app/equipment/${params.slug}` },
+        { rel: "canonical", href: url },
+      ],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            name,
+            image: item?.images ?? [],
+            description: item?.description ?? `${name} rental from KK & Sons Equip.`,
+            brand: { "@type": "Brand", name: item?.category ?? "Construction Equipment" },
+            offers: {
+              "@type": "Offer",
+              url,
+              priceCurrency: "INR",
+              price: item?.dailyRate ?? 0,
+              priceSpecification: {
+                "@type": "UnitPriceSpecification",
+                price: item?.dailyRate ?? 0,
+                priceCurrency: "INR",
+                unitText: "DAY",
+              },
+              availability: item?.availability === "available"
+                ? "https://schema.org/InStock"
+                : "https://schema.org/LimitedAvailability",
+            },
+          }),
+        },
       ],
     };
   },
