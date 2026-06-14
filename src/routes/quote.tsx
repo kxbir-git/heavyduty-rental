@@ -200,6 +200,9 @@ function QuotePage() {
                 </div>
                 <button
                   onClick={() => setNeedsOperator(!needsOperator)}
+                  role="switch"
+                  aria-checked={needsOperator}
+                  aria-label="Include certified operator"
                   className={`w-14 h-7 rounded-full transition-all ${
                     needsOperator ? "bg-[#FFB800]" : "bg-white/10"
                   }`}
