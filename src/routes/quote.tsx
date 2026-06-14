@@ -5,8 +5,8 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { ChevronRight, Check, Truck, Shield, Wrench, Clock } from "lucide-react";
 import { useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { submitBooking } from "@/lib/api/bookings.functions";
 
 
 export const Route = createFileRoute("/quote")({
@@ -66,30 +66,27 @@ function QuotePage() {
       toast.error("Please provide your name and email");
       return;
     }
+    if (selectedEquipment.length === 0) {
+      toast.error("Please select at least one equipment item");
+      return;
+    }
     setSubmitting(true);
     try {
       const start = new Date();
       const end = new Date();
       end.setDate(end.getDate() + duration);
-      const { data: eq } = await supabase
-        .from("equipment")
-        .select("id")
-        .eq("slug", selectedItems[0])
-        .maybeSingle();
-
-      const { data: { user } } = await supabase.auth.getUser();
-      const { error } = await supabase.from("bookings").insert({
-        equipment_id: eq?.id ?? null,
-        customer_name: customerName,
-        customer_email: customerEmail,
-        customer_phone: customerPhone || null,
-        start_date: start.toISOString().slice(0, 10),
-        end_date: end.toISOString().slice(0, 10),
-        total_amount: total,
-        notes: `Items: ${selectedEquipment.map(e => e.name).join(", ")}${needsOperator ? " | with operator" : ""}`,
-        user_id: user?.id ?? null,
+      await submitBooking({
+        data: {
+          equipment_slug: selectedItems[0] ?? null,
+          customer_name: customerName,
+          customer_email: customerEmail,
+          customer_phone: customerPhone || null,
+          start_date: start.toISOString().slice(0, 10),
+          end_date: end.toISOString().slice(0, 10),
+          total_amount: total,
+          notes: `Items: ${selectedEquipment.map((e) => e.name).join(", ")}${needsOperator ? " | with operator" : ""}`,
+        },
       });
-      if (error) throw error;
       toast.success("Quote request submitted! We'll contact you within 2 hours.");
       setSelectedItems([]); setCustomerName(""); setCustomerEmail(""); setCustomerPhone("");
     } catch (err: any) {
