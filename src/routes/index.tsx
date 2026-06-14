@@ -3,16 +3,19 @@ import { createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Your App" },
-      { name: "description", content: "Replace this with a one-sentence description of your app." },
-      { property: "og:title", content: "Your App" },
-      { property: "og:description", content: "Replace this with a one-sentence description of your app." },
+      { title: "KK & Sons Equip — Premium Construction Equipment Rental" },
+      { name: "description", content: "Rent top-tier excavators, cranes, and heavy machinery across India. Competitive daily, weekly, and monthly rates with reliable delivery and operator support." },
+      { property: "og:title", content: "KK & Sons Equip — Premium Construction Equipment Rental" },
+      { property: "og:description", content: "Rent top-tier excavators, cranes, and heavy machinery across India. Competitive daily, weekly, and monthly rates with reliable delivery and operator support." },
+      { property: "og:url", content: "https://apex-rentals.lovable.app/" },
+    ],
+    links: [
+      { rel: "canonical", href: "https://apex-rentals.lovable.app/" },
     ],
   }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
     <div

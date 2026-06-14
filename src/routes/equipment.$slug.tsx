@@ -6,18 +6,22 @@ import { ChevronLeft, ChevronRight, MessageCircle, Phone, Check } from "lucide-r
 import { useState } from "react";
 
 export const Route = createFileRoute("/equipment/$slug")({
-  head: ({ params }) => ({
-    meta: [
-      { title: `${params.slug} — KK & Sons Equip` },
-      { name: "description", content: `View specifications, pricing, and availability for ${params.slug} rental.` },
-      { property: "og:title", content: `${params.slug} — KK & Sons Equip` },
-      { property: "og:description", content: `View specifications, pricing, and availability for ${params.slug} rental.` },
-      { property: "og:url", content: `/equipment/${params.slug}` },
-    ],
-    links: [
-      { rel: "canonical", href: `/equipment/${params.slug}` },
-    ],
-  }),
+  head: ({ params }) => {
+    const item = equipmentData[params.slug] || equipmentData["exc-001"];
+    const name = item?.name || params.slug;
+    return {
+      meta: [
+        { title: `${name} — KK & Sons Equip` },
+        { name: "description", content: `View specifications, pricing, and availability for ${name} rental.` },
+        { property: "og:title", content: `${name} — KK & Sons Equip` },
+        { property: "og:description", content: `View specifications, pricing, and availability for ${name} rental.` },
+        { property: "og:url", content: `https://apex-rentals.lovable.app/equipment/${params.slug}` },
+      ],
+      links: [
+        { rel: "canonical", href: `https://apex-rentals.lovable.app/equipment/${params.slug}` },
+      ],
+    };
+  },
   component: EquipmentDetailPage,
 });
 
