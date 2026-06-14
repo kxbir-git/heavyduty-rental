@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
+import type {} from "@tanstack/react-start";
 
-// TODO: Update BASE_URL once a project name or custom domain is set
-const BASE_URL = "https://kk-sons-equip.vercel.app";
+const BASE_URL = "https://apex-rentals.lovable.app";
 
 interface SitemapEntry {
   path: string;
@@ -21,6 +21,28 @@ export const Route = createFileRoute("/sitemap.xml")({
           { path: "/contact", changefreq: "monthly", priority: "0.8" },
           { path: "/quote", changefreq: "weekly", priority: "0.9" },
         ];
+
+        // Dynamic: one entry per active equipment slug
+        try {
+          const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+          const { data } = await supabaseAdmin
+            .from("equipment")
+            .select("slug, updated_at")
+            .eq("is_active", true);
+          for (const row of data ?? []) {
+            if (!row.slug) continue;
+            entries.push({
+              path: `/equipment/${row.slug}`,
+              lastmod: row.updated_at ? new Date(row.updated_at).toISOString().slice(0, 10) : undefined,
+              changefreq: "weekly",
+              priority: "0.8",
+            });
+          }
+        } catch (err) {
+          console.error("[sitemap] equipment fetch failed", err);
+        }
+
+        // /auth and /admin/* are intentionally excluded — not for public indexing.
 
         const urls = entries.map((e) =>
           [
