@@ -102,6 +102,37 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" },
     ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "KK & Sons Equip",
+          url: "https://apex-rentals.lovable.app/",
+          logo: "https://apex-rentals.lovable.app/favicon.ico",
+          description: "India's trusted construction equipment rental partner. Excavators, cranes, loaders, rollers, generators, and forklifts with pan-India delivery.",
+          telephone: "+91-98765-43210",
+          email: "rentals@kksonsequip.com",
+          areaServed: "IN",
+          sameAs: [],
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "KK & Sons Equip",
+          url: "https://apex-rentals.lovable.app/",
+          potentialAction: {
+            "@type": "SearchAction",
+            target: "https://apex-rentals.lovable.app/equipment?q={search_term_string}",
+            "query-input": "required name=search_term_string",
+          },
+        }),
+      },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,

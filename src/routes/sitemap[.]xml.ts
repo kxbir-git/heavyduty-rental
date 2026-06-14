@@ -20,6 +20,7 @@ export const Route = createFileRoute("/sitemap.xml")({
           { path: "/about", changefreq: "monthly", priority: "0.7" },
           { path: "/contact", changefreq: "monthly", priority: "0.8" },
           { path: "/quote", changefreq: "weekly", priority: "0.9" },
+          { path: "/guides/crane-rental-pricing", changefreq: "monthly", priority: "0.7" },
         ];
 
         // Dynamic: one entry per active equipment slug

@@ -16,7 +16,34 @@ export const Route = createFileRoute("/contact")({
       { property: "og:url", content: "/contact" },
     ],
     links: [
-      { rel: "canonical", href: "/contact" },
+      { rel: "canonical", href: "https://apex-rentals.lovable.app/contact" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          name: "KK & Sons Equip",
+          image: "https://apex-rentals.lovable.app/favicon.ico",
+          telephone: "+91-98765-43210",
+          email: "rentals@kksonsequip.com",
+          url: "https://apex-rentals.lovable.app/contact",
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: "Mumbai",
+            addressRegion: "Maharashtra",
+            addressCountry: "IN",
+          },
+          openingHoursSpecification: {
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            opens: "08:00",
+            closes: "20:00",
+          },
+          areaServed: ["Mumbai", "Pune", "Nashik", "Nagpur", "Surat", "Ahmedabad", "Indore", "Hyderabad", "Bangalore", "Chennai", "Delhi NCR", "Jaipur"],
+        }),
+      },
     ],
   }),
   component: ContactPage,
