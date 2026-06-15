@@ -18,12 +18,12 @@ export const Route = createFileRoute("/")({
 });
 
 const categories = [
-  { name: "Excavators", desc: "20-ton class CAT & Komatsu", rate: "₹16,500/day" },
-  { name: "Cranes", desc: "25-90 ton truck & crawler", rate: "₹28,000/day" },
-  { name: "Loaders", desc: "Wheel & backhoe loaders", rate: "₹9,500/day" },
-  { name: "Rollers", desc: "Dynapac soil compactors", rate: "₹8,200/day" },
-  { name: "Generators", desc: "Cummins 500 kVA diesel", rate: "₹6,500/day" },
-  { name: "Forklifts", desc: "Toyota 2.5-ton class", rate: "₹3,200/day" },
+  { name: "Excavators", desc: "20-ton class CAT & Komatsu" },
+  { name: "Cranes", desc: "25-90 ton truck & crawler" },
+  { name: "Loaders", desc: "Wheel & backhoe loaders" },
+  { name: "Rollers", desc: "Dynapac soil compactors" },
+  { name: "Generators", desc: "Cummins 500 kVA diesel" },
+  { name: "Forklifts", desc: "Toyota 2.5-ton class" },
 ];
 
 const trustPoints = [
