@@ -18,12 +18,12 @@ export const Route = createFileRoute("/")({
 });
 
 const categories = [
-  { name: "Excavators", desc: "20-ton class CAT & Komatsu", rate: "₹16,500/day" },
-  { name: "Cranes", desc: "25-90 ton truck & crawler", rate: "₹28,000/day" },
-  { name: "Loaders", desc: "Wheel & backhoe loaders", rate: "₹9,500/day" },
-  { name: "Rollers", desc: "Dynapac soil compactors", rate: "₹8,200/day" },
-  { name: "Generators", desc: "Cummins 500 kVA diesel", rate: "₹6,500/day" },
-  { name: "Forklifts", desc: "Toyota 2.5-ton class", rate: "₹3,200/day" },
+  { name: "Excavators", desc: "20-ton class CAT & Komatsu" },
+  { name: "Cranes", desc: "25-90 ton truck & crawler" },
+  { name: "Loaders", desc: "Wheel & backhoe loaders" },
+  { name: "Rollers", desc: "Dynapac soil compactors" },
+  { name: "Generators", desc: "Cummins 500 kVA diesel" },
+  { name: "Forklifts", desc: "Toyota 2.5-ton class" },
 ];
 
 const trustPoints = [
@@ -71,8 +71,8 @@ function Index() {
             <Link key={c.name} to="/equipment" className="group p-6 rounded-lg border border-white/5 bg-white/[0.02] hover:border-[#FFB800]/30 hover:bg-[#FFB800]/5 transition-all">
               <h3 className="text-xl font-bold text-white group-hover:text-[#FFB800] transition-colors">{c.name}</h3>
               <p className="text-sm text-white/50 mt-1">{c.desc}</p>
-              <p className="text-xs text-[#FFB800] uppercase tracking-widest font-bold mt-4">From {c.rate}</p>
             </Link>
+
           ))}
         </div>
       </section>
